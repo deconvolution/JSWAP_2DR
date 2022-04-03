@@ -1,3 +1,14 @@
+"""
+An example for rock sample simulation.
+
+Output
+  One needs paraview for visualization.
+  ./test/time_info.pvd to see material properties and wavefield.
+  ./test/model/receiver location .csv for receiver location.
+  ./test/model/source location .csv for source location.
+
+"""
+
 ## import packages
 using Revise
 using JSWAP_2DR
