@@ -1,11 +1,9 @@
 # JSWAP
 
 ## Contents
-* [Target](#Target)
-* [Highlights](#Highlights)
 * [Installation](#Installation)
-* [Dependencies](#Dependencies)
-* [Usage](#Usage)
+* [Example](#Example)
+
 
 ## Installation
 Install Julia on OS first. Then, in an IDE with Julia installed (e.g., [Atom](https://atom.io/)), one can install this package by
