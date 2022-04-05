@@ -197,9 +197,18 @@ dt is the time interval for the simulation.
                     end
                     dx=dx;
                     dy=dy;
+                    # coefficient
+                    rho_iph_j=copy(rho);
+                    rho_i_jph=copy(rho);
+                    lambda_i_j=copy(lambda);
+                    mu_i_j=copy(mu);
+                    mu_iph_jph=copy(mu);
 
+                    rho_iph_j[1:end-1,:]=.5*(rho[1:end-1,:]+rho[2:end,:]);
+                    rho_i_jph[:,1:end-1]=.5*(rho[:,1:end-1]+rho[:,2:end]);
+                    mu_iph_jph[2:end,2:end]=.5*(mu[1:end-1,:1:end-1]+mu[2:end,2:end]);
+                    
                     # wave vector
-
                     v1_iph_j=@zeros(nx,ny);
                     v2_i_jph=copy(v1_iph_j);
 
@@ -207,8 +216,6 @@ dt is the time interval for the simulation.
                     sigmas22_i_j=copy(v1_iph_j);
                     sigmas12_iph_jph=copy(v1_iph_j);
                     p_i_j=copy(v1_iph_j);
-                    ## wave vector for boundary
-
 
                     # derivatives
                     v1_iph_j_1=copy(v1_iph_j);
@@ -282,7 +289,9 @@ dt is the time interval for the simulation.
                         # @parallel (2:nx-1,2:nz-1) u_2_plus(dtt2,v2_i_jph_2);
                         @parallel Dy_12(v2_i_jph,v2_i_jph_2,0,0,6,5);
 
-                        @timeit ti "compute_sigma" @parallel JSWAP_CPU_2D_isotropic_forward_solver_compute_au_for_sigma(dt,dx,dy,inv_Qa,lambda,mu,
+                        @timeit ti "compute_sigma" @parallel JSWAP_CPU_2D_isotropic_forward_solver_compute_au_for_sigma(dt,dx,dy,inv_Qa,
+                        lambda_i_j,mu_i_j,
+                        mu_iph_jph,
                         beta,
                         v1_iph_j_1,v1_iph_jp1_2,
                         v2_ip1_jph_1,v2_i_jph_2,
@@ -358,7 +367,7 @@ dt is the time interval for the simulation.
                         @parallel Dy_12(p_i_j,p_i_jp1_2,0,0,5,6);
 
 
-                        @timeit ti "compute_v" @parallel JSWAP_CPU_2D_isotropic_forward_solver_compute_v(dt,dx,dy,rho,beta,
+                        @timeit ti "compute_v" @parallel JSWAP_CPU_2D_isotropic_forward_solver_compute_v(dt,dx,dy,rho_iph_j,rho_i_jph,beta,
                         v1_iph_j,v2_i_jph,
                         sigmas11_ip1_j_1,
                         sigmas22_i_jp1_2,

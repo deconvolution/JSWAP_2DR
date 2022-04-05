@@ -2,13 +2,13 @@
 data=JSWAP_2DR.readmat("/media/zhang/second disk/GitHub2/Giovanni/model creation/m1.mat","data");
 ## dimensions
 # Time increment
-dt=10^-3;
+dt=10^-3/5;
 # dx
 dx=10;
 # dy
 dy=10;
 # number of time steps
-nt=1000;
+nt=3000;
 # nx
 nx=100;
 # ny
@@ -54,6 +54,11 @@ M22[:]=1*rickerWave(freq,dt,nt,2);
 M12[:]=0*rickerWave(freq,dt,nt,2);
 ## material properties
 lambda=ones(nx,ny)*10^9;
+mu=ones(nx,ny)*10^9;
+rho=ones(nx,ny)*1000;
+inv_Qa=zeros(size(lambda));
+
+lambda=ones(nx,ny)*10^9;
 air=1:29;
 lambda[:,air] .=340^2;
 mu[:,air] .=0;
@@ -70,10 +75,6 @@ rho[air,:] .=1;
 lambda[(nx+1).-(air),:] .=340^2;
 mu[(nx+1).-(air),:]  .=0;
 rho[(nx+1).-(air),:]  .=1;
-
-mu=ones(nx,ny)*10^9;
-rho=ones(nx,ny)*1000;
-inv_Qa=zeros(size(lambda));
 ## boundary
 # boundary y=? at y plus
 KFSyp=70;
@@ -97,12 +98,12 @@ lp=20;
 # PML power
 nPML=2;
 # PML theorecital coefficient
-Rc=.1;
+Rc=.01;
 # set PML active
 # xminus,xplus,yminus,yplus
 PML_active=[1 1 1 1];
 ## plot
 # plot interval
-plot_interval=50;
+plot_interval=200;
 # wavefield interval
 wavefield_interval=nothing;
