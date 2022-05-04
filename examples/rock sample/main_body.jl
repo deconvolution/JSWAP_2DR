@@ -15,7 +15,7 @@ using JSWAP_2DR
 ti=JSWAP_2DR.TimerOutput();
 Threads.nthreads()
 ## Run solvers
-include("./input_template.jl");
+include("./input_template2.jl");
 ## create folder for saving
 p2= @__FILE__;
 p3=chop(p2,head=0,tail=3);
