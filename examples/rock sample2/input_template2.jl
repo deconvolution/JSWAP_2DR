@@ -5,13 +5,13 @@
 airN = 60;
 
 # Time increment
-dt=1e-5;
+dt=1e-5/4;
 # dx
 dx=.2;
 # dy
 dy=.2;
 # number of time steps
-nt=4000;
+nt=8000;
 # nx
 nx= Int(40/dx) .+ airN;
 # ny
@@ -61,7 +61,7 @@ lambda = lambda*1.6;
 mu=lambda*0.85;
 rho=ones(nx,ny)*2400;
 inv_Qa=ones(size(lambda))* (1/(1000*10^5));
-
+#=
 layerind=zeros(ny,ny);
 layer = Int64(ny/2)-1:Int64(ny/2)+1;
 layerind[:,layer] .= 1;
@@ -110,7 +110,7 @@ end
 layerind = layerind[Int64((ny-nx)/2):ny-Int64((ny-nx)/2)-1,:];
 
 rotlayer2 = findall(isequal(1),layerind);
-#=
+
 lambda[rotlayer2] .= 0.6*10^10;
 mu[rotlayer2] = lambda[rotlayer2] .* 0.85;
 rho[rotlayer2] .= 1500;
@@ -145,15 +145,12 @@ mu[:,(ny+1).-(air)]  .=8.1*10^10;#0
 rho[:,(ny+1).-(air)]  .=7850;
 
 lambda[air,:] .=0.004*10^10;
-mu[air,:] .=0.00276*10^10;#0;
+mu[air,:] .=0;#0;
 rho[air,:] .=1770;
 
 lambda[(nx+1).-(air),:] .=0.004*10^10;
-mu[(nx+1).-(air),:]  .=0.00276*10^10;#0;
+mu[(nx+1).-(air),:]  .=0;#0;
 rho[(nx+1).-(air),:]  .=1770;
-
-
-
 ## boundary
 # boundary y=? at y plus
 KFSyp= ny .- Int64(airN./2);
@@ -166,11 +163,11 @@ KFSym=nothing;
 # x-range boundary KFSym
 KFSymxr=[Int64(airN./2),nx .- Int64(airN./2)];
 # boundary x=? at x plus
-KFSxp=nx - Int64(airN./2) ;
+KFSxp=231 ;
 # y-range of boundary KFSxp
 KFSxpyr=[Int64(airN./2) ,ny .- Int64(airN./2) ];
 # boundary x=? at x minus
-KFSxm=Int64(airN./2) ;
+KFSxm=29;
 # y-range of boundary KFSxpyr
 KFSxmyr=[Int64(airN./2) ,ny - Int64(airN./2) ];
 ## PML
@@ -185,6 +182,6 @@ Rc=.01;
 PML_active=[1 1 1 1];
 ## plot
 # plot interval
-plot_interval=100;
+plot_interval=500;
 # wavefield interval
 wavefield_interval=nothing;

@@ -207,7 +207,7 @@ dt is the time interval for the simulation.
                     rho_iph_j[1:end-1,:]=.5*(rho[1:end-1,:]+rho[2:end,:]);
                     rho_i_jph[:,1:end-1]=.5*(rho[:,1:end-1]+rho[:,2:end]);
                     mu_iph_jph[2:end,2:end]=.5*(mu[1:end-1,:1:end-1]+mu[2:end,2:end]);
-                    
+
                     # wave vector
                     v1_iph_j=@zeros(nx,ny);
                     v2_i_jph=copy(v1_iph_j);
