@@ -110,11 +110,11 @@ end
 layerind = layerind[Int64((ny-nx)/2):ny-Int64((ny-nx)/2)-1,:];
 
 rotlayer2 = findall(isequal(1),layerind);
-
+#=
 lambda[rotlayer2] .= 0.6*10^10;
 mu[rotlayer2] = lambda[rotlayer2] .* 0.85;
 rho[rotlayer2] .= 1500;
-
+=#
 ## sample boundary conditions
 air = Int64(airN/2):Int64(airN/2);
 
