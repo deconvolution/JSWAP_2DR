@@ -153,7 +153,8 @@ rho[air, :] .= 1850;#1;
 lambda[(nx+1).-air, :] .= 0.004 * 10^10;
 mu[(nx+1).-air, :] .= 0;#0;
 rho[(nx+1).-air, :] .= 1850;#1;
-##
+## tune the filter here. Make sure the medium is still an effective medium under
+# this frequency, i.e., the fuzzy region should be smaller than the wavelength.
 fil=3;
 tt=imfilter(lambda, Kernel.gaussian(fil));
 heatmap(tt');
