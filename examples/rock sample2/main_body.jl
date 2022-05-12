@@ -11,7 +11,7 @@ Output
 
 ## import packages
 using Revise
-using JSWAP_2DR
+using JSWAP_2DR,ImageFiltering,Plots
 ti=JSWAP_2DR.TimerOutput();
 Threads.nthreads()
 ## Run solvers

@@ -204,9 +204,9 @@ dt is the time interval for the simulation.
                     mu_i_j=copy(mu);
                     mu_iph_jph=copy(mu);
 
-                    rho_iph_j[1:end-1,:]=.5*(rho[1:end-1,:]+rho[2:end,:]);
-                    rho_i_jph[:,1:end-1]=.5*(rho[:,1:end-1]+rho[:,2:end]);
-                    mu_iph_jph[2:end,2:end]=.5*(mu[1:end-1,:1:end-1]+mu[2:end,2:end]);
+                    #rho_iph_j[1:end-1,:]=.5*(rho[1:end-1,:]+rho[2:end,:]);
+                    #rho_i_jph[:,1:end-1]=.5*(rho[:,1:end-1]+rho[:,2:end]);
+                    #mu_iph_jph[2:end,2:end]=1*(mu[2:end,2:end]);
 
                     # wave vector
                     v1_iph_j=@zeros(nx,ny);
@@ -309,10 +309,10 @@ dt is the time interval for the simulation.
                             sigmas12_iph_jph[KFSymxr[1]:KFSymxr[2],KFSym] .=0;
                         end
                         if KFSxp!=nothing
-                            sigmas12_iph_jph[KFSxp,KFSxpyr[1]:KFSxpyr[2]] .=0;
+                            sigmas12_iph_jph[KFSxp:KFSxp,KFSxpyr[1]:KFSxpyr[2]] .=0;
                         end
                         if KFSxm!=nothing
-                            sigmas12_iph_jph[KFSxm,KFSxmyr[1]:KFSxmyr[2]] .=0;
+                            sigmas12_iph_jph[KFSxm:KFSxm,KFSxmyr[1]:KFSxmyr[2]] .=0;
                         end
 
                         @timeit ti "compute_sigma" @parallel JSWAP_CPU_2D_isotropic_forward_solver_compute_sigma(dt,dx,dy,inv_Qa,lambda,mu,
@@ -346,6 +346,7 @@ dt is the time interval for the simulation.
                         @parallel Dy_12(sigmas22_i_j,sigmas22_i_jp1_2,0,0,5,6);
                         @parallel Dx_12(sigmas12_iph_jph,sigmas12_iph_jph_1,6,5,0,0);
                         @parallel Dy_12(sigmas12_iph_jph,sigmas12_iph_jph_2,0,0,6,5);
+                        #=
                         if KFSyp!=nothing
                             sigmas12_iph_jph_2[KFSypxr[1]:KFSypxr[2],KFSyp+1]=sigmas12_iph_jph[KFSypxr[1]:KFSypxr[2],KFSyp+1]/dy;
                             sigmas12_iph_jph_2[KFSypxr[1]:KFSypxr[2],KFSyp]=-sigmas12_iph_jph[KFSypxr[1]:KFSypxr[2],KFSyp-1]/dy;
@@ -363,6 +364,7 @@ dt is the time interval for the simulation.
                             sigmas12_iph_jph_1[KFSxm+1,KFSxmyr[1]:KFSxmyr[2]]=sigmas12_iph_jph[KFSxm+1,KFSxmyr[1]:KFSxmyr[2]]/dx;
                             sigmas12_iph_jph_1[KFSxm,KFSxmyr[1]:KFSxmyr[2]]=-sigmas12_iph_jph[KFSxm-1,KFSxmyr[1]:KFSxmyr[2]]/dx;
                         end
+                        =#
                         @parallel Dx_12(p_i_j,p_ip1_j_1,5,6,0,0);
                         @parallel Dy_12(p_i_j,p_i_jp1_2,0,0,5,6);
 
