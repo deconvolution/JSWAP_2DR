@@ -155,6 +155,7 @@ mu[(nx+1).-air, :] .= 0;#0;
 rho[(nx+1).-air, :] .= 1850;#1;
 ## tune the filter here. Make sure the medium is still an effective medium under
 # this frequency, i.e., the fuzzy region should be smaller than the wavelength.
+# fil controls the smoothness.
 fil=3;
 tt=imfilter(lambda, Kernel.gaussian(fil));
 heatmap(tt');
