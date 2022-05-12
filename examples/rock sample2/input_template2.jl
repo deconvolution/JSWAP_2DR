@@ -11,7 +11,7 @@ dx = 0.2;
 # dy
 dy = 0.2;
 # number of time steps
-nt = 4000;
+nt = 8000;
 # nx
 nx = Int(40 / dx) .+ airN;
 # ny
